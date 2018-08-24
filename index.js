@@ -103,17 +103,11 @@ function handleDeleteItemClicked() {
 function handleHideAllCheckBox (){
   $('#js-checkbox-div').on('click', '#js-checkbox', function(event){
     if($(this).prop('checked')){
+      //NEED TO FIND BETTER WAY OF WRITING THIS
       $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeIn('slow');
     } else {
       $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeOut('slow');
     }
-      
-    // if ($('#js-checkbox').attr('checked')) {
-    //   console.log('check is working');
-    // } 
-    // if ($('#js-checkbox').attr(''))  {
-    //   console.log('unchecked');
-    // }
 
   });
   
