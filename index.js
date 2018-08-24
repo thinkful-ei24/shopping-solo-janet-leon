@@ -104,9 +104,9 @@ function handleHideAllCheckBox (){
   $('#js-checkbox-div').on('click', '#js-checkbox', function(event){
     if($(this).prop('checked')){
       //NEED TO FIND BETTER WAY OF WRITING THIS
-      $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeIn('slow');
+      $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeIn('fast');
     } else {
-      $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeOut('slow');
+      $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeOut('fast');
     }
 
   });
