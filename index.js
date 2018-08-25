@@ -10,9 +10,6 @@ const STORE = {
 
 };
 
-
-
-
 function generateItemElement(item, itemIndex) {
   return `
     <li class="js-item-index-element" data-item-index="${itemIndex}">
@@ -55,31 +52,15 @@ function addItemToShoppingList(itemName) {
 
 function handleNewItemSubmit() {
   $('button:first').click(
-    
     function(event) {
       event.preventDefault();
-      console.log('`handleNewItemSubmit AH` ran');
+      console.log('`handleNewItemSubmit` ran');
       const newItemName = $('.js-shopping-list-entry').val();
       $('.js-shopping-list-entry').val('');
       addItemToShoppingList(newItemName);
       renderShoppingList();
     });
 }
-//console.log($('#js-shopping-list-form').find('button:contains(\'Search\')'));
-
-
-
-// function handleNewItemSubmit() {
-//   $('#js-shopping-list-form').submit(function(event) {
-//     event.preventDefault();
-//     console.log('`handleNewItemSubmit` ran');
-//     const newItemName = $('.js-shopping-list-entry').val();
-//     $('.js-shopping-list-entry').val('');
-//     addItemToShoppingList(newItemName);
-//     renderShoppingList();
-//   });
-// }
-
 
 function getItemIndexFromElement(item) {
   const itemIndexString = $(item)
@@ -121,9 +102,10 @@ function handleDeleteItemClicked() {
 function handleHideAllCheckBox (){
   $('#js-checkbox-div').on('click', '#js-checkbox', function(event){
     if($(this).prop('checked')){
-      //NEED TO FIND BETTER WAY OF WRITING THIS
-      $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeIn('fast');
+      
+      $('.js-shopping-list').find('li').show();
     } else {
+      //NEED TO FIND BETTER WAY OF WRITING THIS
       $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeOut('fast');
     }
   });
@@ -134,12 +116,12 @@ function filterBySearch(){
   // const newSearchList = {};
   console.log('filter by search ran');
   for(let i=0; i < STORE.items.length; i++){
-    console.log(STORE.items[0]["name"]);
-
-  }
-
-  $( `ul :contains(${newSearch})` ).show();
-  
+    let eachListItem =STORE.items[i].name; 
+    if (eachListItem === newSearch){
+   $('.js-shopping-list').find('li').hide();
+   $('.js-shopping-list').find('li').find("span:contains('"+newSearch+"')").closest('li').show();
+    } 
+  }  
 }
 
 function handleSearch() {
@@ -149,16 +131,11 @@ function handleSearch() {
       const newSearch = $('.js-shopping-list-search').val();
       event.preventDefault();
       filterBySearch();
-      console.log(newSearch);
+      //console.log(newSearch);
       console.log('`handleSEARCH` ran');
      
-     
     }
-   
   );
-
-
-
 }
 
 
