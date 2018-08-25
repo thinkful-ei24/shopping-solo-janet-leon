@@ -14,16 +14,22 @@
         <form id="js-shopping-list-form">
             <label for="shopping-list-entry">Add an item</label>
             <input type="text" name="shopping-list-entry" class="js-shopping-list-entry" placeholder="e.g., broccoli">
+            
+            <button type="submit">Add item</button> 
+            <div id= "js-search-div">
+            <label for="shopping-list-search">Search for</label>
+            <input type="text" name="shopping-list-search" class="js-shopping-list-search" placeholder="e.g., apples">
 
-            <button type="submit">Add item</button>
-            <div id ="js-checkbox-div">
+            <button type="submit">Search for Item</button>
+            </div>
+            <div id ="js-checkbox-div" >
                 <label class="container">Display All
-                <input type="checkbox" id="js-checkbox">
+                <input type="checkbox" id="js-checkbox" checked >
                 <span class="checkmark"></span>
               </label>
             </div>
         </form>
-        
+       
         <ul class="shopping-list js-shopping-list">
         </ul>
     </div>
