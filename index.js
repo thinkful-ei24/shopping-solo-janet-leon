@@ -115,7 +115,7 @@ function filterBySearch(){
 
   }  
 }
-//===========================================================================
+//==========================================================================
 function handleSearch() {
  
   $('#js-shopping-list-form').find('button:contains(\'Search\')').on('click',
@@ -127,7 +127,6 @@ function handleSearch() {
       console.log('`handleSEARCH` ran');
       //reset search input to blank (this is also reseting the STORE filterBySearch that resets line 96 above
       $('.js-shopping-list-search').val('');
-     
     }
   );
 }
