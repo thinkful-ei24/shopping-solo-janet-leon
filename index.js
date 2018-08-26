@@ -88,6 +88,7 @@ function handleSearch() {
       filterBySearch();
       //console.log(newSearch);
       console.log('`handleSEARCH` ran');
+      $('.js-shopping-list-search').val('');
      
     }
   );
