@@ -56,7 +56,33 @@ function addItemToShoppingList(itemName) {
   console.log(`Adding "${itemName}" to shopping list`);
   STORE.items.unshift({name: itemName, checked: false});
 }
+//===========================================================================
+function stateOfDisplay(){
+  console.log(`State of Display ran`);
+  //if the STORE.displayALL key is false, find everything that has class ".shopping-item__checked"
+  //and hide it
+  //else show everything
+  if(!STORE.displayAll){
+    //NEED TO FIND BETTER WAY OF WRITING THIS
+    $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeOut('fast');
+  } else {
+    $('.js-shopping-list').find('li').show();
+  }
 
+}
+//===========================================================================
+
+function handleHideAllCheckBox (){
+  $('#js-checkbox-div').on('click', '#js-checkbox', function(event){
+    if($(this).prop('checked')){
+      STORE.displayAll = true;
+    } else {
+      STORE.displayAll = false;
+    }
+    //Run the stateofDisplay everytime the user checks so the it can either show or not show checked items
+    stateOfDisplay();
+  });
+}
 
 //===========================================================================
 
@@ -68,6 +94,9 @@ function filterBySearch(){
   for(let i=0; i < STORE.items.length; i++){
     let eachListItem =STORE.items[i].name; 
     if (eachListItem === newSearch){
+      //if the user search matches any items in the STORE array, hide everything and then only 
+      //show items that match that search
+      //Set the the STORE filterSearch key to equal the user search
       STORE.filterSearch =newSearch;
       $('.js-shopping-list').find('li').hide();
       $('.js-shopping-list').find('li').find("span:contains('"+newSearch+'\')').closest('li').show();
@@ -88,6 +117,7 @@ function handleSearch() {
       filterBySearch();
       //console.log(newSearch);
       console.log('`handleSEARCH` ran');
+      //reset search input to blank (this is also reseting the STORE filterBySearch that resets line 96 above
       $('.js-shopping-list-search').val('');
      
     }
@@ -103,10 +133,20 @@ function handleNewItemSubmit() {
       $('.js-shopping-list-entry').val('');
       addItemToShoppingList(newItemName);
       renderShoppingList();
-//When adding item that matches search word, don't re-render but keep search filter
-      if (newItemName === STORE.filterSearch){
-        filterBySearch();
-      } 
+      /* Might delete this
+      //When adding item that matches search word, don't re-render but keep search filter
+      // if (newItemName === STORE.filterSearch){
+      //   filterBySearch();
+      // } 
+      */
+
+      //Temporary solution for not reloading the whole DOM when Display all is not checked and user is adding a new item
+      //everything loads for a fraction of a second. Need to come back to this or get help
+      
+      //Diplay All
+      if(STORE.displayAll===false){
+        stateOfDisplay();
+      }
     });
 }
 //===========================================================================
@@ -129,7 +169,17 @@ function handleItemCheckClicked() {
     console.log(itemIndex);
     toggleCheckedForListItem(itemIndex);
     renderShoppingList();
-   
+    //when a check button is clicked, if the DISPLAY ALL button is false(not checked)
+    //find the closest li to that checked button and hide it
+    //Need to find better solution, but this is the best I have so far
+    //Do I need to re-render the DOM again?
+    if(!STORE.displayAll){
+      console.log('This if statement works');
+      $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').hide();
+      // toggleCheckedForListItem(itemIndex);
+      // renderShoppingList();
+    }
+    
   });
 }
 //===========================================================================
@@ -148,7 +198,7 @@ function handleEdit(){
     renderShoppingList();
   });
 }
- //===========================================================================
+//===========================================================================
 function handleDeleteItemClicked() {
   // this function will be responsible for when users want to delete a shopping list
   // item
@@ -162,33 +212,8 @@ function handleDeleteItemClicked() {
   console.log('`handleDeleteItemClicked` ran');
 }
 
-//===========================================================================
-function stateOfDisplay(){
-  console.log(`State of Display ran`);
-  if(STORE.displayAll===false){
-    //NEED TO FIND BETTER WAY OF WRITING THIS
-    $('.shopping-list').find('li').find('.shopping-item__checked').closest('li').fadeOut('fast');
-  } else {
-   $('.js-shopping-list').find('li').show();
-  }
-
-}
-//===========================================================================
-
-function handleHideAllCheckBox (){
-  $('#js-checkbox-div').on('click', '#js-checkbox', function(event){
-    if($(this).prop('checked')){
-      STORE.displayAll = true;
-    } else {
-      STORE.displayAll = false;
-    }
-    stateOfDisplay();
-  });
-}
-
 
 //===========================================================================
-
 
 
 // this function will be our callback when the page loads. it's responsible for
