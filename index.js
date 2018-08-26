@@ -18,7 +18,7 @@ function generateItemElement(item, itemIndex) {
   return `
     <li class="js-item-index-element" data-item-index="${itemIndex}">
             
-    <form class="js-update-item ">
+    <form class="js-update-item hidden">
     <label for="shopping-list-update"></label>
     <input type="text" name="shopping-list-update" class="js-shopping-update" placeholder="e.g., broccoli">
     <button type="button" class="js-update"> Update</button> 
@@ -228,7 +228,9 @@ function handleEdit(){
     console.log('`handleEdit` ran');
     const itemIndex = getItemIndexFromElement(this);
     console.log(itemIndex);
-   $(this).closest(".js-update-item").toggleClass("hidden");
+   $(this).parent().parent().find(".js-update-item").toggleClass("hidden");
+   
+   //(".js-update-item").toggleClass("hidden");
     // const itemIndex = getItemIndexFromElement(this);
     // console.log(itemIndex);
     // //toggleCheckedForListItem(itemIndex);
