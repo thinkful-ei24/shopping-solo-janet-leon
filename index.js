@@ -4,11 +4,11 @@
 const STORE = {
   items: [
     {name: 'apples', checked: false},
-    {name: 'oranges', checked: false},
-    {name: 'milk', checked: true},
-    {name: 'bread', checked: false}
+    // {name: 'oranges', checked: false},
+    // {name: 'milk', checked: true},
+    // {name: 'bread', checked: false}
   ],
-  editState: false,
+  //editState: false,
   filterSearch: " ",
   displayAll: true,
 
@@ -17,6 +17,13 @@ const STORE = {
 function generateItemElement(item, itemIndex) {
   return `
     <li class="js-item-index-element" data-item-index="${itemIndex}">
+            
+    <form class="js-update-item ">
+    <label for="shopping-list-update"></label>
+    <input type="text" name="shopping-list-update" class="js-shopping-update" placeholder="e.g., broccoli">
+    <button type="button" class="js-update"> Update</button> 
+    </form>
+
       <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}">${item.name}</span>
       <div class="shopping-item-controls">
         <button class="shopping-item-toggle js-item-toggle">
@@ -79,7 +86,8 @@ function handleHideAllCheckBox (){
     } else {
       STORE.displayAll = false;
     }
-    //Run the stateofDisplay everytime the user checks so the it can either show or not show checked items
+
+    //Run the stateofDisplay everytime the user checks so it can either show or not show checked items
     stateOfDisplay();
   });
 }
@@ -182,22 +190,8 @@ function handleItemCheckClicked() {
     
   });
 }
-//===========================================================================
-// function createEdit(){
-//   const input = document.createElement('input';
-//   input.type = 'text'
-// )
-// }
-//===========================================================================
-function handleEdit(){
-  $('.js-shopping-list').on('click', '.js-item-edit', function(event) {
-    console.log('`handleEdit` ran');
-    const itemIndex = getItemIndexFromElement(this);
-    console.log(itemIndex);
-    toggleCheckedForListItem(itemIndex);
-    renderShoppingList();
-  });
-}
+
+
 //===========================================================================
 function handleDeleteItemClicked() {
   // this function will be responsible for when users want to delete a shopping list
@@ -214,7 +208,34 @@ function handleDeleteItemClicked() {
 
 
 //===========================================================================
+function updateButton(){
+  $('.js-shopping-list').on('click', '.js-update',function(event) {
+    event.preventDefault();
+    console.log('`handleUpdate` ran');
+    const itemIndex = getItemIndexFromElement(this);
+    console.log(itemIndex);
+    const updateVal = $(".js-shopping-update").val();
+    console.log(updateVal);
+    console.log(STORE.items[itemIndex]);
+    STORE.items[itemIndex].name = updateVal;
+    renderShoppingList();
+  });
+}
 
+//===========================================================================
+function handleEdit(){
+  $('.js-shopping-list').on('click', '.js-item-edit', function(event) {
+    console.log('`handleEdit` ran');
+    const itemIndex = getItemIndexFromElement(this);
+    console.log(itemIndex);
+   $(this).closest(".js-update-item").toggleClass("hidden");
+    // const itemIndex = getItemIndexFromElement(this);
+    // console.log(itemIndex);
+    // //toggleCheckedForListItem(itemIndex);
+    // $('.shopping-list').find('li').css("background-color", "yellow");
+    // renderShoppingList();
+  });
+}
 
 // this function will be our callback when the page loads. it's responsible for
 // initially rendering the shopping list, and activating our individual functions
@@ -228,6 +249,7 @@ function handleShoppingList() {
   handleHideAllCheckBox ();
   handleSearch();
   handleEdit();
+  updateButton();
   
 }
 

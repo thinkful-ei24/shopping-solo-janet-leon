@@ -62,7 +62,7 @@ button:hover {
   display: inline-block;
 }
 
-.extreme{
-  color: red;
+.hidden{
+  display: none;
 }
 
