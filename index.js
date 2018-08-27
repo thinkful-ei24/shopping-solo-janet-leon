@@ -213,8 +213,9 @@ function updateButton(){
     console.log('`handleUpdate` ran');
     const itemIndex = getItemIndexFromElement(this);
     console.log(itemIndex);
-    const updateVal = $(".js-shopping-update").val();
+    const updateVal =  $(this).siblings(".js-shopping-update").val();
     console.log(updateVal);
+   
     console.log(STORE.items[itemIndex]);
     STORE.items[itemIndex].name = updateVal;
     renderShoppingList();
